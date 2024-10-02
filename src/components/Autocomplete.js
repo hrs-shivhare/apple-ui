@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useAutocomplete } from "@mui/base/useAutocomplete";
-import { border, styled } from "@mui/system";
+import { styled } from "@mui/system";
 
-export default function UseAutocomplete() {
+export default function Autocomplete() {
   const [value, setValue] = React.useState(null);
 
   const {
@@ -63,92 +63,80 @@ const grey = {
   900: "#1C2025",
 };
 
-const Label = styled("label")`
-  display: block;
-  font-family: sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 4px;
-`;
+const Label = styled("label")({
+  display: "block",
+  fontFamily: "sans-serif",
+  fontSize: "14px",
+  fontWeight: 500,
+  marginBottom: "4px",
+});
 
-const Root = styled("div")(
-  ({ theme }) => `
-  color: rgb(0 0 0  / 25%);
-  background: ${theme.palette.background};
-  box-shadow: 0 0.5px 2.5px 0 rgb(0 0 0 / 30%), 0 0 0 0.5px rgb(0 0 0 / 5%);
-  display: flex;
-  gap: 10px;
-  padding: 3px 7px;
-  overflow: hidden;
-  width: 206px;
+const Root = styled("div")(({ theme }) => ({
+  color: "rgb(0 0 0 / 25%)",
+  background: theme.palette.background.default,
+  boxShadow: "0 0.5px 2.5px 0 rgb(0 0 0 / 30%), 0 0 0 0.5px rgb(0 0 0 / 5%)",
+  display: "flex",
+  gap: "10px",
+  padding: "3px 7px",
+  overflow: "hidden",
+  width: "206px",
+  transition: "box-shadow 0.3s ease",
 
-  &:hover {
-    border-color: ${blue[400]};
-  }
+  "&.Mui-focused": {
+    outline: 0,
+    boxShadow: `0 0 0 3px rgb(from ${theme.palette.primary} r g b / 50%)`,
+  },
+}));
 
-  &.Mui-focused {
-    outline: 0;
-    box-shadow: 0 0 0 3px rgb(0 122 255 / 50%)};
-  }
-`
-);
+const Input = styled("input")(({ theme }) => ({
+  fontSize: "13px",
+  fontFamily: "inherit",
+  lineHeight: "normal",
+  color: "inherit",
+  background: "inherit",
+  border: "none",
+  borderRadius: "inherit",
+  outline: 0,
+  padding: 0,
+  flex: "1 0 auto",
+}));
 
-const Input = styled("input")(
-  ({ theme }) => `
-  font-size: 13px;
-  font-family: inherit;
-  line-height: normal;
-  color: inherit;
-  background: inherit;
-  border: none;
-  border-radius: inherit;
-  outline: 0;
-  padding: 0;
-  flex: 1 0 auto;
-`
-);
+const Listbox = styled("ul")(({ theme }) => ({
+  fontFamily: "'IBM Plex Sans', sans-serif",
+  fontSize: "13px",
+  lineHeight: "16px",
+  boxSizing: "border-box",
+  padding: "8px 0",
+  margin: "12px 0",
+  width: "320px",
+  borderRadius: "10px",
+  overflow: "auto",
+  outline: 0,
+  maxHeight: "300px",
+  zIndex: 1,
+  position: "absolute",
+  background: theme.palette.mode === "dark" ? grey[900] : "#fff",
+  color: theme.palette.mode === "dark" ? grey[300] : grey[900],
+  boxShadow:
+    "0px 2px 4px 0 rgb(0 0 0 / 15%), 0px 8px 15px 6px rgb(0 0 0 / 18%), 0 0.5px 1px 0.5px rgb(255 255 255 / 50%) inset",
+  backdropFilter: "blur(82px)",
+}));
 
-const Listbox = styled("ul")(
-  ({ theme }) => `
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 13px;
-  line-height: 16px;
-  box-sizing: border-box;
-  padding: 8px 0;
-  margin: 12px 0;
-  width: 320px;
-  border-radius: 10px;
-  overflow: auto;
-  outline: 0;
-  max-height: 300px;
-  z-index: 1;
-  position: absolute;
-  background: ${theme.palette.mode === "dark" ? grey[900] : "#fff"};
-  color: ${theme.palette.mode === "dark" ? grey[300] : grey[900]};
-  box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.15), 0px 8px 15px 6px rgba(0, 0, 0, 0.18), 0 0.5px 1px 0.5px rgb(255 255 255 / 50%) inset;
-  backdrop-filter: blur(82px);
-  };
-  `
-);
+const Option = styled("li")(({ theme }) => ({
+  listStyle: "none",
+  padding: "4px 8px",
+  borderBottom: "1px solid rgb(0 0 0 / 5%)",
+  cursor: "default",
 
-const Option = styled("li")(
-  ({ theme }) => `
-  list-style: none;
-  padding: 4px 8px;
-  border-bottom: 1px solid rgb(0 0 0 / 5%);
-  cursor: default;
+  "&:hover": {
+    cursor: "pointer",
+  },
 
-  &:hover {
-    cursor: pointer;
-  }
-
-  &.Mui-focused,
-  &.Mui-focusVisible, &[aria-selected=true] {
-    background-color: ${theme.palette.primary};
-    color: #fff;
-  }
-  `
-);
+  '&.Mui-focused, &.Mui-focusVisible, &[aria-selected="true"]': {
+    backgroundColor: theme.palette.primary,
+    color: "#fff",
+  },
+}));
 
 // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
 const top100Films = [
